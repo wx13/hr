@@ -1,5 +1,17 @@
 # HR -- horizontal rule in the console.
 
+# Sum fun presets
+_hr_flag_ch="4r2w4r2k 2r6w2r2k 4r2w4r2k"
+_hr_flag_ee="b k w"
+_hr_flag_cl="2b4w2k 6r2k"
+_hr_flag_dk="2r2w4r2k 8w2k 2r2w4r2k"
+_hr_flag_fi="2b2w4b2k 8w2k 2b2w4b2k"
+_hr_flag_us="4b6r2k 4b6w2k 10r2k 10w2k"
+_hr_flag_fr="2b2w2r2k 2"
+_hr_flag_ie="2g2w2y2k 2"
+_hr_flag_it="2g2w2r2k 2"
+_hr_flag_jp="8w2k 3w2r3w2k 8w2k"
+
 # Returns a color based on the day of the week.
 _hr_color_of_the_day() {
 	local colors=('m' 'w' 'b' 'g' 'c' 'y' 'r')
@@ -23,9 +35,13 @@ _hr_color_map=(
 
 # Expands a singl row of color.
 _hr_expand_color_row() {
+	local colors=$1
+	if [[ $colors =~ ^[0-9]+$ ]]; then
+		echo $colors
+		return
+	fi
 	local expanded_colors=""
 	local num=""
-	local colors=$1
 	for (( i=0; i<${#colors}; i++ )); do
 		local color="${colors:$i:1}"
 		if [[ $color =~ [0-9] ]]; then
@@ -47,7 +63,7 @@ _hr_expand_colors() {
 	local last_color
 	for color in ${@}; do
 		color=$(_hr_expand_color_row $color)
-		if [[ $color =~ [0-9]+ ]]; then
+		if [[ $color =~ ^[0-9]+$ ]]; then
 			color=$(printf "%$(($color-1))s" | sed "s/ /${last_color} /g")
 		fi
 		expanded_colors="${expanded_colors} ${color}"
