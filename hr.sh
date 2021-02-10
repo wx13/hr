@@ -21,11 +21,32 @@ _hr_color_map=(
 )
 
 
+# Expands a singl row of color.
+_hr_expand_color_row() {
+	local expanded_colors=""
+	local num=""
+	local colors=$1
+	for (( i=0; i<${#colors}; i++ )); do
+		local color="${colors:$i:1}"
+		if [[ $color =~ [0-9] ]]; then
+			num="$num$color"
+		else
+			if [ ! -z "$num" ]; then
+				color=$(printf "%${num}s" | sed "s/ /${color}/g")
+				num=""
+			fi
+			expanded_colors="${expanded_colors}${color}"
+		fi
+	done
+	echo $expanded_colors
+}
+
 # Expands shorthand within the color spec.
 _hr_expand_colors() {
 	local expanded_colors=""
 	local last_color
-	for color in $colors; do
+	for color in ${@}; do
+		color=$(_hr_expand_color_row $color)
 		if [[ $color =~ [0-9]+ ]]; then
 			color=$(printf "%$(($color-1))s" | sed "s/ /${last_color} /g")
 		fi
@@ -39,12 +60,12 @@ _hr_expand_colors() {
 # Prints a colorful horizontal rule.
 hr() {
 	# Use specified color, or color of the day.
-	colors=${@}
+	local colors=${@}
 	if [ "${colors}" = "" ]; then
 		colors=$(_hr_color_of_the_day)
+	else
+		colors=$(_hr_expand_colors $colors)
 	fi
-
-	colors=$(_hr_expand_colors colors)
 
 	# Each separate "word" is a line of color.
 	for color in $colors; do
