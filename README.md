@@ -14,7 +14,7 @@ hr; ./some_long_running_command
 
 This will choose a color based on the day of the week. You can also specify the
 color using color codes. Available colors are red (r), white (w), blue (b), cyan
-(c), yellow (y), magenta (m), and black (k). Here are some examples.
+(c), yellow (y), green(g), magenta (m), and black (k). Here are some examples.
 
 color code  | Result
 ----------- | -------------------------------------------
