@@ -1,6 +1,6 @@
 # HR -- horizontal rule in the console.
 
-# Sum fun presets
+# Some fun presets
 _hr_flag_ch="4r2w4r2k 2r6w2r2k 4r2w4r2k"
 _hr_flag_ee="b k w"
 _hr_flag_cl="2b4w2k 6r2k"
